@@ -3,11 +3,12 @@
 Plugin Name: Ivaldi Focuspoint
 Plugin URI: https://ivaldi.nl
 Description: Set focus point via media library and provide helper functions in PHP
-Version: 1.0.1
+Version: 1.0.2
 Author: Michel Fiege
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-GitLab Plugin URI: https://gitlab.ivaldi.nl/ivaldi/ivaldi-wp-focuspoint
+GitHub Plugin URI: https://github.com/ivaldi/ivaldi-wp-focuspoint
+GitHub Branch: master
 */
 
 require_once( "acf.php" );
