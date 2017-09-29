@@ -6,15 +6,17 @@ var IvaldiAdminFocusPoint = {
   init: function() {
     this.image = null;
 
+    if (wp.media === undefined) return;
+
     wp.media.view.Modal.prototype.on(
-      "open",
+      'open',
       function(e) {
-        this.image = jQuery(".media-modal img.details-image");
+        this.image = jQuery('.media-modal img.details-image');
         this.input_x = jQuery('[data-name="focus_point_x"] input');
         this.input_y = jQuery('[data-name="focus_point_y"] input');
 
         jQuery(this.image).on(
-          "load",
+          'load',
           function() {
             this.showFocusPoint(
               Math.round(this.image[0].width * this.input_x.val()),
@@ -24,14 +26,14 @@ var IvaldiAdminFocusPoint = {
         );
 
         jQuery(this.input_x).on(
-          "change",
+          'change',
           function(e) {
             this.updateFocusPoint();
           }.bind(this)
         );
 
         jQuery(this.input_y).on(
-          "change",
+          'change',
           function(e) {
             this.updateFocusPoint();
           }.bind(this)
@@ -40,8 +42,8 @@ var IvaldiAdminFocusPoint = {
     );
 
     jQuery(document).on(
-      "click",
-      ".media-modal img.details-image",
+      'click',
+      '.media-modal img.details-image',
       function(e) {
         var focus_point_x = e.pageX - this.image.offset().left;
         var focus_point_y = e.pageY - this.image.offset().top;
@@ -53,19 +55,19 @@ var IvaldiAdminFocusPoint = {
   },
 
   showFocusPoint: function(x, y) {
-    jQuery("#ivaldi-admin-focus-point").remove();
+    jQuery('#ivaldi-admin-focus-point').remove();
 
     var dot = jQuery(
       '<div id="ivaldi-admin-focus-point" style="background: rgba(0,0,0,.5); width: 40px; height: 40px; position: absolute; border-radius: 40px; border: 2px solid #fff;"></div>'
     );
 
-    this.image.parent().css("position", "relative");
+    this.image.parent().css('position', 'relative');
 
     var corrected_x =
       (this.image.parent().width() - this.image.width()) / 2 + x;
 
-    dot.css("left", corrected_x);
-    dot.css("top", y);
+    dot.css('left', corrected_x);
+    dot.css('top', y);
 
     this.image.parent().append(dot);
   },
@@ -73,7 +75,7 @@ var IvaldiAdminFocusPoint = {
   updateFormFields: function(x, y) {
     this.input_x.val(Math.round(x / this.image.width() * 100) / 100);
     this.input_y.val(Math.round(y / this.image.height() * 100) / 100);
-    this.input_x.trigger("change"); // causes ajax save in the background
+    this.input_x.trigger('change'); // causes ajax save in the background
   },
 
   updateFocusPoint: function() {
