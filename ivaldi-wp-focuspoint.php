@@ -3,7 +3,7 @@
 Plugin Name: Ivaldi Focuspoint
 Plugin URI: https://ivaldi.nl
 Description: Set focus point via media library and provide helper functions in PHP
-Version: 1.0.3
+Version: 1.0.4
 Author: Michel Fiege
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -110,6 +110,26 @@ function iv_focuspoint_style( $image_id, $size = 'full' ) {
 	}
 
 	return $ret == '' ? false : $ret;
+}
+
+function iv_focuspoint_position( $image_id ) {
+	$ret = '';
+	$img = iv_get_image_object( $image_id );
+
+	if ( isset( $img->ID ) ) {
+
+		$focus_x = get_field( 'focus_point_x', $img->ID );
+		$focus_y = get_field( 'focus_point_y', $img->ID );
+
+		if ( $focus_x || $focus_y ) {
+			$x_percentage = $focus_x * 100;
+			$y_percentage = $focus_y * 100;
+			$ret .= 'background-size: cover; background-position:'.$x_percentage.'% '.$y_percentage.'%;';
+		}
+
+	}
+
+	return $ret;
 }
 
 function iv_get_image_object( $image_id ) {
