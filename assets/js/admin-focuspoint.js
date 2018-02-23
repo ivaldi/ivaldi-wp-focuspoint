@@ -11,32 +11,44 @@ var IvaldiAdminFocusPoint = {
     wp.media.view.Modal.prototype.on(
       'open',
       function(e) {
-        this.image = jQuery('.media-modal img.details-image');
-        this.input_x = jQuery('[data-name="focus_point_x"] input');
-        this.input_y = jQuery('[data-name="focus_point_y"] input');
-
-        jQuery(this.image).on(
-          'load',
+        setTimeout(
           function() {
+            this.image = jQuery('.media-modal img.details-image');
+            this.input_x = jQuery('[data-name="focus_point_x"] input');
+            this.input_y = jQuery('[data-name="focus_point_y"] input');
+
+            // load on timeout
             this.showFocusPoint(
               Math.round(this.image[0].width * this.input_x.val()),
               Math.round(this.image[0].height * this.input_y.val())
             );
-          }.bind(this)
-        );
 
-        jQuery(this.input_x).on(
-          'change',
-          function(e) {
-            this.updateFocusPoint();
-          }.bind(this)
-        );
+            // load on image load
+            this.image.on(
+              'load',
+              function() {
+                this.showFocusPoint(
+                  Math.round(this.image[0].width * this.input_x.val()),
+                  Math.round(this.image[0].height * this.input_y.val())
+                );
+              }.bind(this)
+            );
 
-        jQuery(this.input_y).on(
-          'change',
-          function(e) {
-            this.updateFocusPoint();
-          }.bind(this)
+            jQuery(this.input_x).on(
+              'change',
+              function(e) {
+                this.updateFocusPoint();
+              }.bind(this)
+            );
+
+            jQuery(this.input_y).on(
+              'change',
+              function(e) {
+                this.updateFocusPoint();
+              }.bind(this)
+            );
+          }.bind(this),
+          1000
         );
       }.bind(this)
     );
